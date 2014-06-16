@@ -1,4 +1,10 @@
 /*
+Multifont GFX library is adapted from Adafruit_GFX library by Paul Kourany
+v1.0.0, May 2014 Initial Release
+v1.0.1, June 2014 Font Compilation update
+
+Please read README.pdf for details
+
 This is the core graphics library for all our displays, providing a common
 set of graphics primitives (points, lines, circles, etc.).  It needs to be
 paired with a hardware-specific library for each display device we carry
@@ -55,40 +61,52 @@ Adafruit_GFX::Adafruit_GFX(int16_t w, int16_t h):
 void Adafruit_GFX::setFont(uint8_t f) {
   font = f;
   switch(font) {
+#ifdef TIMESNEWROMAN8
     case TIMESNR_8:
       fontData = timesNewRoman_8ptBitmaps;
 	  fontDesc = timesNewRoman_8ptDescriptors;
       fontKern = 1;
       break;
+#endif
+#ifdef CENTURYGOTHIC8
     case CENTURY_8:
       fontData = centuryGothic_8ptBitmaps;
 	  fontDesc = centuryGothic_8ptDescriptors;
       fontKern = 1;
       break;
+#endif
+#ifdef ARIAL8
     case ARIAL_8:
       fontData = arial_8ptBitmaps;
 	  fontDesc = arial_8ptDescriptors;
       fontKern = 1;
       break;
+#endif
+#ifdef COMICSANSMS8
     case COMICS_8:
       fontData = comicSansMS_8ptBitmaps;
 	  fontDesc = comicSansMS_8ptDescriptors;
       fontKern = 1;
       break;
+#endif
+#ifdef GLCDFONTDEFAULT
     case GLCDFONT:
       fontData = glcdfontBitmaps;
 	  fontDesc = glcdfontDescriptors;
       fontKern = 1;
       break;
-    case TEST:
+#endif
+#ifdef TESTFONT
+   case TEST:
       fontData = testBitmaps;
 	  fontDesc = testDescriptors;
       fontKern = 1;
       break;
+#endif
 	default:
-      font = ARIAL_8;
-      fontData = arial_8ptBitmaps;
-	  fontDesc = arial_8ptDescriptors;
+      font = GLCDFONT;
+      fontData = glcdfontBitmaps;
+	  fontDesc = glcdfontDescriptors;
       fontKern = 1;
       break;
   }

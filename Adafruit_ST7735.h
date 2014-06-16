@@ -19,26 +19,25 @@
 #ifndef _ADAFRUIT_ST7735H_
 #define _ADAFRUIT_ST7735H_
 
-#include "application.h"
+#define SPARK 1 // !!!!!!!!!!! TEMPORARILY !!!!!!!!!
 
-#ifdef SPARK_CORE
-// nothing to do
-#else
 #if ARDUINO >= 100
  #include "Arduino.h"
  #include "Print.h"
+#elif defined (SPARK)
+#include "application.h"
 #else
  #include "WProgram.h"
 #endif
-#endif
 
-#ifdef SPARK_CORE
+
+#if defined(SPARK)
 #include "Adafruit_mfGFX.h"
 #else
 #include <Adafruit_GFX.h>
 #endif
 
-#ifdef SPARK_CORE
+#if defined(SPARK)
 #define pgm_read_byte(addr) (*(const unsigned char *)(addr))
 #define pgm_read_word(addr) (*(const unsigned short *)(addr))
 #endif
@@ -123,7 +122,7 @@ class Adafruit_ST7735 : public Adafruit_GFX {
 
  public:
 
-#ifdef SPARK_CORE // hardware spi only
+#if defined(SPARK) // hardware spi only
 #else
   Adafruit_ST7735(uint8_t CS, uint8_t RS, uint8_t SID, uint8_t SCLK, uint8_t RST);
 #endif
@@ -163,8 +162,7 @@ class Adafruit_ST7735 : public Adafruit_GFX {
 
   boolean  hwSPI;
 
-#ifdef SPARK_CORE
-
+#if defined(SPARK)
   uint8_t  _cs, _rs, _rst;
   uint8_t  colstart, rowstart; // some displays need this changed
 #endif

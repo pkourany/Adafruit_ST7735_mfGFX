@@ -19,9 +19,10 @@
 #include "Adafruit_ST7735.h"
 //#include <limits.h>
 
+#define SPARK 1 // !!!!!!!!!!! TEMPORARILY !!!!!!!!!
 
-#ifdef SPARK_CORE
-#define PROGMEM
+#if defined(SPARK)
+ #define PROGMEM
 #else
 #include "pins_arduino.h"
 #include "wiring_private.h"
@@ -33,7 +34,7 @@ inline uint16_t swapcolor(uint16_t x) {
 }
 
 
-#ifndef SPARK_CORE
+#if !defined(SPARK)
 // Constructor when using software SPI.  All output pins are configurable.
 Adafruit_ST7735::Adafruit_ST7735(uint8_t cs, uint8_t rs, uint8_t sid,
  uint8_t sclk, uint8_t rst) : Adafruit_GFX(ST7735_TFTWIDTH, ST7735_TFTHEIGHT)
@@ -55,7 +56,7 @@ Adafruit_ST7735::Adafruit_ST7735(uint8_t cs, uint8_t rs, uint8_t rst) :
   _rs   = rs;
   _rst  = rst;
   hwSPI = true;
-#ifndef SPARK_CORE
+#if !defined(SPARK)
   _sid  = _sclk = 0;
 #endif
 }
@@ -64,7 +65,7 @@ Adafruit_ST7735::Adafruit_ST7735(uint8_t cs, uint8_t rs, uint8_t rst) :
 #define __AVR__
 #endif
 
-#ifdef SPARK_CORE
+#if defined(SPARK)
 inline void Adafruit_ST7735::spiwrite(uint8_t c) {
   SPI.transfer(c);
 }
@@ -339,9 +340,8 @@ void Adafruit_ST7735::commonInit(const uint8_t *cmdList) {
 
   pinMode(_rs, OUTPUT);
   pinMode(_cs, OUTPUT);
-#ifdef SPARK_CORE
+#if defined(SPARK)
   SPI.begin();
-  //SPI.setDataMode(SPI_MODE0);
   SPI.setClockDivider(SPI_CLOCK_DIV4); // 4 MHz (half speed)
   //Due defaults to 4mHz (clock divider setting of 21)
   SPI.setBitOrder(MSBFIRST);
@@ -356,7 +356,7 @@ void Adafruit_ST7735::commonInit(const uint8_t *cmdList) {
   rsport    = digitalPinToPort(_rs);
 #endif
 
-#ifndef SPARK_CORE
+#if !defined(SPARK)
   cspinmask = digitalPinToBitMask(_cs);
   rspinmask = digitalPinToBitMask(_rs);
 #endif
@@ -373,7 +373,7 @@ void Adafruit_ST7735::commonInit(const uint8_t *cmdList) {
     SPI.setBitOrder(MSBFIRST);
     SPI.setDataMode(SPI_MODE0);
   } else {
-#ifndef SPARK_CORE
+#if !defined(SPARK)      
     pinMode(_sclk, OUTPUT);
     pinMode(_sid , OUTPUT);
 #endif
@@ -385,7 +385,7 @@ void Adafruit_ST7735::commonInit(const uint8_t *cmdList) {
     clkport     = digitalPinToPort(_sclk);
     dataport    = digitalPinToPort(_sid);
 #endif
-#ifndef SPARK_CORE
+#if !defined(SPARK)
     clkpinmask  = digitalPinToBitMask(_sclk);
     datapinmask = digitalPinToBitMask(_sid);
 #endif
@@ -400,7 +400,7 @@ void Adafruit_ST7735::commonInit(const uint8_t *cmdList) {
   }
 
   // toggle RST low to reset; CS low so it'll listen to us
-#ifdef SPARK_CORE
+#if defined(SPARK)
 	digitalWrite(_cs, LOW); // *csport &= ~cspinmask;
 #endif
 #ifdef __AVR__
@@ -472,7 +472,7 @@ void Adafruit_ST7735::setAddrWindow(uint8_t x0, uint8_t y0, uint8_t x1,
 
 
 void Adafruit_ST7735::pushColor(uint16_t color) {
-#ifdef SPARK_CORE
+#if defined(SPARK)
   digitalWrite(_rs, HIGH); 
   digitalWrite(_cs, LOW); 
 #endif
@@ -488,7 +488,7 @@ void Adafruit_ST7735::pushColor(uint16_t color) {
   spiwrite(color >> 8);
   spiwrite(color);
 
-#ifdef SPARK_CORE
+#if defined(SPARK)
   digitalWrite(_cs, HIGH); 
 #endif
 #ifdef __AVR__
@@ -505,7 +505,7 @@ void Adafruit_ST7735::drawPixel(int16_t x, int16_t y, uint16_t color) {
 
   setAddrWindow(x,y,x+1,y+1);
 
-#ifdef SPARK_CORE
+#if defined(SPARK)
   digitalWrite(_rs, HIGH); 
   digitalWrite(_cs, LOW); 
 #endif
@@ -521,7 +521,7 @@ void Adafruit_ST7735::drawPixel(int16_t x, int16_t y, uint16_t color) {
   spiwrite(color >> 8);
   spiwrite(color);
 
-#ifdef SPARK_CORE
+#if defined(SPARK)
     digitalWrite(_cs, HIGH); 
 #endif
 #ifdef __AVR__
@@ -543,7 +543,7 @@ void Adafruit_ST7735::drawFastVLine(int16_t x, int16_t y, int16_t h,
 
   uint8_t hi = color >> 8, lo = color;
 
-#ifdef SPARK_CORE
+#if defined(SPARK)
   digitalWrite(_rs, HIGH); 
   digitalWrite(_cs, LOW); 
 #endif
@@ -560,7 +560,7 @@ void Adafruit_ST7735::drawFastVLine(int16_t x, int16_t y, int16_t h,
     spiwrite(lo);
   }
 
-#ifdef SPARK_CORE
+#if defined(SPARK)
   digitalWrite(_cs, HIGH); 
 #endif
 #ifdef __AVR__
@@ -581,7 +581,7 @@ void Adafruit_ST7735::drawFastHLine(int16_t x, int16_t y, int16_t w,
   setAddrWindow(x, y, x+w-1, y);
 
   uint8_t hi = color >> 8, lo = color;
-#ifdef SPARK_CORE
+#if defined(SPARK)
   digitalWrite(_rs, HIGH); 
   digitalWrite(_cs, LOW); 
 #endif
@@ -597,7 +597,7 @@ void Adafruit_ST7735::drawFastHLine(int16_t x, int16_t y, int16_t w,
     spiwrite(hi);
     spiwrite(lo);
   }
-#ifdef SPARK_CORE
+#if defined(SPARK)
   digitalWrite(_cs, HIGH); 
 #endif
 #ifdef __AVR__
@@ -628,7 +628,7 @@ void Adafruit_ST7735::fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
   setAddrWindow(x, y, x+w-1, y+h-1);
 
   uint8_t hi = color >> 8, lo = color;
-#ifdef SPARK_CORE
+#if defined(SPARK)
   digitalWrite(_rs, HIGH); 
   digitalWrite(_cs, LOW); 
 #endif
@@ -647,7 +647,7 @@ void Adafruit_ST7735::fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
     }
   }
 
-#ifdef SPARK_CORE
+#if defined(SPARK)
   digitalWrite(_cs, HIGH); 
 #endif
 #ifdef __AVR__

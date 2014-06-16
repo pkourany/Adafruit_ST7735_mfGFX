@@ -5,7 +5,7 @@
 
 #include "Adafruit_mfGFX.h"    // Core graphics library
 #include "Adafruit_ST7735.h" // Hardware-specific library
-#include "fonts.h"
+
 
 Adafruit_ST7735 tft = Adafruit_ST7735(cs, dc, rst); // hardware spi
 

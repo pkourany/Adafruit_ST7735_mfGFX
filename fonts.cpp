@@ -1,8 +1,17 @@
-// 
-//  Font data for AgencyFB 11pt
-// 
+/*
+Multifont GFX library is adapted from Adafruit_GFX library by Paul Kourany
+v1.0.0, May 2014 Initial Release
+v1.0.1, June 2014 Font Compilation update
+
+Please read README.pdf for details
+*/
+
+// Font data
+ 
 #include "fonts.h"
 
+
+#ifdef TIMESNEWROMAN8
 // Character bitmaps for timesNewRoman 8pt
 const uint8_t timesNewRoman_8ptBitmaps[] = 
 {
@@ -104,6 +113,7 @@ const uint8_t timesNewRoman_8ptBitmaps[] =
 	0x00, 0x00, 0x00, 0x00, 0x00, 0xE8, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 
 };
 
+
 // Character bitmaps for timesNewRoman 8pt
 const FontDescriptor timesNewRoman_8ptDescriptors[] =
 {
@@ -203,8 +213,9 @@ const FontDescriptor timesNewRoman_8ptDescriptors[] =
 	{3, 12, 1176}, 	
 	{5, 12, 1188}, 	
 };
+#endif	//TIMESNEWROMAN8
 
-
+#ifdef CENTURYGOTHIC8
 // Character bitmaps for AgencyFB 11pt
 const uint8_t centuryGothic_8ptBitmaps[] = 
 {
@@ -407,8 +418,10 @@ const FontDescriptor centuryGothic_8ptDescriptors[] =
 	{3, 11, 1078}, 		// } 
 	{6, 11, 1089}, 		// ~ 
 };
+#endif	//CENTURYGOTHIC8
 
 
+#ifdef ARIAL8
 const uint8_t arial_8ptBitmaps[] = 
 {
 	0x20, 0x7F,		// Start Character, End Character
@@ -607,7 +620,10 @@ const FontDescriptor arial_8ptDescriptors[] =
 	{3, 10, 970}, 	
 	{5, 10, 980}	
 };
+#endif	//ARIAL8
 
+
+#ifdef COMICSANSMS8
 const uint8_t comicSansMS_8ptBitmaps[] = 
 {
 	0x20, 0x7F,		// Start Character, End Character
@@ -806,6 +822,7 @@ const FontDescriptor comicSansMS_8ptDescriptors[] =
 	{4, 12, 1176}, 	
 	{6, 12, 1188}, 	
 };
+#endif	//COMICSANSMS8
 
 const uint8_t glcdfontBitmaps[] = 
 {
@@ -1327,9 +1344,10 @@ const FontDescriptor glcdfontDescriptors[] =
 	{5,8,2040} 	
 };
 
+#ifdef TESTFONT
 const uint8_t testBitmaps[] =
 {
-	0x00, 0xFF,		// Start Character, End Character
+	0x20, 0x7F,		// Start Character, End Character
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 	0x00, 0x00, 0x00, 0xC0, 0x01, 0x20, 0x01, 0xA0, 0x06, 0xC0, 0x0F, 0x00, 0x1A, 0x00, 0x2C, 0x00, 0x38, 0x00, 0xE0, 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
 	0x00, 0x00, 0x00, 0x00, 0xE0, 0x00, 0x90, 0x38, 0x90, 0xE0, 0x71, 0x80, 0x0F, 0x00, 0x1F, 0x00, 0x68, 0xC0, 0x98, 0x38, 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
@@ -1525,3 +1543,4 @@ const FontDescriptor testDescriptors[] =
 	{7, 14, 2296}, 	
 	{7, 14, 2310}
 };
+#endif	//TESTFONT
