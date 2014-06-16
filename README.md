@@ -9,6 +9,7 @@ Please see the README.pdf files for instructions on creating and adding new font
 
 BE AWARE that though font data does not take up Spark RAM, they do however take up flash space so having too many fonts may prove problematic.
 
+** UPDATED with font compilation option, June 2014
 
 This is a library for the Adafruit 1.8" SPI display.
 This library works with the Adafruit 1.8" TFT Breakout w/SD card
