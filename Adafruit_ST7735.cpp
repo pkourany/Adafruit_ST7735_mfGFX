@@ -409,7 +409,7 @@ void Adafruit_ST7735::commonInit(const uint8_t *cmdList) {
 #if defined(__SAM3X8E__)
   csport ->PIO_CODR  |=  cspinmask; // Set control bits to LOW (idle)
 #endif
-  if (_rst) {
+  if (_rst != -1) {
     pinMode(_rst, OUTPUT);
     digitalWrite(_rst, HIGH);
     delay(500);
