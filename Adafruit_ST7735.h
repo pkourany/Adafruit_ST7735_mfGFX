@@ -53,6 +53,9 @@ typedef unsigned char prog_uchar;
   #include <avr/pgmspace.h>
 #endif
 
+// RST pin use define
+#define NO_RST_PIN	255
+
 // some flags for initR() :(
 #define INITR_GREENTAB 0x0
 #define INITR_REDTAB   0x1
