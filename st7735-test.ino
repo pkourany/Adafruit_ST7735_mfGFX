@@ -1,7 +1,7 @@
 
 #define cs   A2
 #define dc   D0
-#define rst  -1 
+#define rst  NO_RST_PIN
 
 #include "Adafruit_mfGFX.h"    // Core graphics library
 #include "Adafruit_ST7735.h" // Hardware-specific library
